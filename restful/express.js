@@ -1,30 +1,20 @@
 const express = require('express');
+const consign = require('consign');
+const bodyParser = require('body-parser');
 
 let app = express();
 
-app.get('/', (req, res) => {
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-    res.statusCode = 200;
-    res.setHeader('content-Type', 'text/html');
-    res.end('<h1>Olá<h1>');
-});
-
-app.get('/users', (req, res) => {
-
-    res.statusCode = 200;
-    res.setHeader('content-Type', 'application/json');
-    res.json({
-        users: [{
-            name: 'Hcode',
-            email: 'contato@hcode.com.br',
-            id: 1
-        }]
-    });
-
-});
+consign().include('routes').include('utils').into(app);
 
 app.listen(3000, '127.0.0.1', () => {
 
     console.log('servidor rodando!');
 
 });
+
+// You can run the serve using "node express"
+// or with "nodemon express"(if using nodemon)
+// inside this file's folder
